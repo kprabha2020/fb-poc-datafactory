@@ -7,6 +7,9 @@
 			"sinks": [],
 			"transformations": [
 				{
+					"name": "Select1"
+				},
+				{
 					"name": "ItemInput"
 				},
 				{
@@ -30,7 +33,24 @@
 				"          COOKTIME as string",
 				"     ),",
 				"     order: 0) ~> ItemInput",
-				"ItemInput output() ~> output1"
+				"ItemInput select(mapColumn(",
+				"          ITEMID,",
+				"          DESC,",
+				"          DIVISIONID,",
+				"          COST,",
+				"          MEAL,",
+				"          PLUID,",
+				"          BARCODE,",
+				"          SCALE,",
+				"          RESTOID,",
+				"          FUNCTIONID,",
+				"          CLASSID,",
+				"          HIDDEN_REC,",
+				"          COOKTIME",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Select1",
+				"Select1 output() ~> output1"
 			]
 		}
 	}
