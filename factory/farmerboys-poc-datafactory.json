@@ -1,0 +1,9 @@
+{
+	"name": "farmerboys-poc-datafactory",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "889a59ce-ec5b-452d-b9dc-da3b5dfb5c65",
+		"tenantId": "ef24a074-12e7-4dc6-9fef-3e86fcaceadb"
+	}
+}
