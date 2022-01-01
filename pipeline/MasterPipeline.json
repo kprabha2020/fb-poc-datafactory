@@ -17,12 +17,22 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT jobId, runPriority FROM \nmetadata.ProcessSteps\nWHERE isActive=1\nGROUP BY jobId,runPriority\nORDER BY runPriority",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"dataset": {
 						"referenceName": "DS_AzSQL_Staging",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"ServerName": {
+								"value": "sqlserverforpoc.database.windows.net",
+								"type": "Expression"
+							},
+							"DatabaseName": "platform-config",
+							"UserName": "aadmin",
+							"PasswordSecret": "SQLServerpasswordsecret"
+						}
 					}
 				}
 			}
