@@ -306,6 +306,40 @@
 							"name": "sink1"
 						}
 					],
+					"transformations": [],
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tskipLines: 1) ~> source1\nsource1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_CSV_File')]",
+				"[concat(variables('factoryId'), '/datasets/DS_AzSQL_Staging')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1_copy1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DS_CSV_File",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DS_AzSQL_Staging",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
 					"transformations": [
 						{
 							"name": "Flowlet1",
@@ -332,7 +366,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Data flow1",
+						"name": "DF_ITEM",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
@@ -357,6 +391,50 @@
 									"sink1": {
 										"SchemaName": "Staging",
 										"TableName": "ITEM"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "DF_Invoice",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "DF_ITEM",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {
+										"filename": "INVOICE.csv",
+										"storageAccountName": "farmerboysstorageaccount",
+										"storageAccountSecret": "blobstoragesecretkey"
+									},
+									"sink1": {
+										"SchemaName": "Staging",
+										"TableName": "INVOICE"
 									}
 								}
 							},
