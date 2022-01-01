@@ -40,14 +40,7 @@
 			{
 				"name": "DF_Invoice",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [
-					{
-						"activity": "DF_ITEM",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "1.00:00:00",
 					"retry": 0,
