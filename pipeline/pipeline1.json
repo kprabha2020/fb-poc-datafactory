@@ -25,6 +25,7 @@
 								"storageAccountSecret": "blobstoragesecretkey"
 							},
 							"sink1": {
+								"SchemaName": "Staging",
 								"TableName": "ITEM"
 							}
 						}
