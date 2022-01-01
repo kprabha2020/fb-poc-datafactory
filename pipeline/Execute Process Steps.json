@@ -64,7 +64,11 @@
 												"dependsOn": [],
 												"userProperties": [],
 												"typeProperties": {
-													"waitOnCompletion": true
+													"pipeline": {
+														"referenceName": "Ingestion Process",
+														"type": "PipelineReference"
+													},
+													"waitOnCompletion": false
 												}
 											}
 										]
