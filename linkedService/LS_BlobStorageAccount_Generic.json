@@ -1,0 +1,30 @@
+{
+	"name": "LS_BlobStorageAccount_Generic",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"parameters": {
+			"StorageAccountName": {
+				"type": "string"
+			},
+			"StorageAccountSecret": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"connectionString": "DefaultEndpointsProtocol=https;AccountName=@{linkedService().StorageAccountName};",
+			"accountKey": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AZ_KeyVault",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": {
+					"value": "@linkedService().StorageAccountSecret",
+					"type": "Expression"
+				}
+			}
+		}
+	}
+}
