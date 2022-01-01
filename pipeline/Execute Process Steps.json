@@ -75,7 +75,7 @@
 								},
 								"cases": [
 									{
-										"value": "IngestionProcess",
+										"value": "Ingestion",
 										"activities": [
 											{
 												"name": "Execute Ingestion Process",
