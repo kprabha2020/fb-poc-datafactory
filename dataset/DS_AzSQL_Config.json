@@ -1,0 +1,22 @@
+{
+	"name": "DS_AzSQL_Config",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Config_DB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().TableSchema",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().TableName",
+				"type": "Expression"
+			}
+		}
+	}
+}
