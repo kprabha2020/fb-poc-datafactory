@@ -23,6 +23,9 @@
 								"filename": "ITEM.csv",
 								"storageAccountName": "farmerboysstorageaccount",
 								"storageAccountSecret": "blobstoragesecretkey"
+							},
+							"sink1": {
+								"TableName": "ITEM"
 							}
 						}
 					},
