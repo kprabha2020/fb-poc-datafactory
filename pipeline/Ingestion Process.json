@@ -90,9 +90,7 @@
 								"sink": {
 									"type": "AzureSqlSink"
 								},
-								"enableStaging": false,
-								"parallelCopies": 2,
-								"dataIntegrationUnits": 2
+								"enableStaging": false
 							},
 							"inputs": [
 								{
