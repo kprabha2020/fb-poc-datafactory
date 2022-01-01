@@ -5,17 +5,35 @@
 			"referenceName": "LS_AZ_SQL",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"ServerName": "sqlserverforpoc.database.windows.net",
-				"DatabaseName": "platform-config",
-				"UserName": "aadmin",
-				"PasswordSecret": "SQLServerpasswordsecret"
+				"ServerName": {
+					"value": "@dataset().DatabaseName",
+					"type": "Expression"
+				},
+				"DatabaseName": {
+					"value": "@dataset().DatabaseName",
+					"type": "Expression"
+				},
+				"UserName": {
+					"value": "@dataset().UserName",
+					"type": "Expression"
+				},
+				"PasswordSecret": {
+					"value": "@dataset().PasswordSecret",
+					"type": "Expression"
+				}
 			}
 		},
 		"parameters": {
-			"SchemaName": {
+			"ServerName": {
 				"type": "string"
 			},
-			"TableName": {
+			"DatabaseName": {
+				"type": "string"
+			},
+			"UserName": {
+				"type": "string"
+			},
+			"PasswordSecret": {
 				"type": "string"
 			}
 		},

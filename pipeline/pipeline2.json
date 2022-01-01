@@ -55,8 +55,8 @@
 						"referenceName": "DS_AzSQL_Staging",
 						"type": "DatasetReference",
 						"parameters": {
-							"SchemaName": "staging",
-							"TableName": "ITEM"
+							"ServerName": "staging",
+							"DatabaseName": "ITEM"
 						}
 					}
 				]
@@ -114,8 +114,8 @@
 						"referenceName": "DS_AzSQL_Staging",
 						"type": "DatasetReference",
 						"parameters": {
-							"SchemaName": "staging",
-							"TableName": "INVOICE"
+							"ServerName": "staging",
+							"DatabaseName": "INVOICE"
 						}
 					}
 				]

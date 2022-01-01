@@ -23,10 +23,6 @@
 								"filename": "ITEM.csv",
 								"storageAccountName": "farmerboysstorageaccount",
 								"storageAccountSecret": "blobstoragesecretkey"
-							},
-							"sink1": {
-								"SchemaName": "Staging",
-								"TableName": "ITEM"
 							}
 						}
 					},
@@ -58,10 +54,6 @@
 								"filename": "INVOICE.csv",
 								"storageAccountName": "farmerboysstorageaccount",
 								"storageAccountSecret": "blobstoragesecretkey"
-							},
-							"sink1": {
-								"SchemaName": "Staging",
-								"TableName": "INVOICE"
 							}
 						}
 					},
