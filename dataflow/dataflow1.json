@@ -22,7 +22,7 @@
 				}
 			],
 			"transformations": [],
-			"script": "source(output(\n\t\tITEMID as string,\n\t\tDESC as string,\n\t\tDIVISIONID as string,\n\t\tCOST as string,\n\t\tMEAL as string,\n\t\tPLUID as string,\n\t\tBARCODE as string,\n\t\tSCALE as string,\n\t\tRESTOID as string,\n\t\tFUNCTIONID as string,\n\t\tCLASSID as string,\n\t\tHIDDEN_REC as string,\n\t\tCOOKTIME as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tskipLines: 1) ~> source1\nsource1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tITEMID,\n\t\tDESC,\n\t\tDIVISIONID,\n\t\tCOST,\n\t\tMEAL,\n\t\tPLUID,\n\t\tBARCODE,\n\t\tSCALE,\n\t\tRESTOID,\n\t\tFUNCTIONID,\n\t\tCLASSID,\n\t\tHIDDEN_REC,\n\t\tCOOKTIME\n\t)) ~> sink1"
+			"script": "source(output(\n\t\tITEMID as string,\n\t\tDESC as string,\n\t\tDIVISIONID as string,\n\t\tCOST as string,\n\t\tMEAL as string,\n\t\tPLUID as string,\n\t\tBARCODE as string,\n\t\tSCALE as string,\n\t\tRESTOID as string,\n\t\tFUNCTIONID as string,\n\t\tCLASSID as string,\n\t\tHIDDEN_REC as string,\n\t\tCOOKTIME as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tskipLines: 1) ~> source1\nsource1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
 		}
 	}
 }
