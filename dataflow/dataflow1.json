@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DelimitedText1",
+						"referenceName": "DS_CSV_File",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
