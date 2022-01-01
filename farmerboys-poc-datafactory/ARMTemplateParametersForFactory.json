@@ -14,6 +14,9 @@
 		"LS_CSV_Files_connectionString": {
 			"value": ""
 		},
+		"LS_Config_DB_connectionString": {
+			"value": ""
+		},
 		"AZ_KeyVault_properties_typeProperties_baseUrl": {
 			"value": "https://farmerboys-azkeyvault.vault.azure.net/"
 		}
