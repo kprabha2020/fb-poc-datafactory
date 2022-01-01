@@ -80,6 +80,17 @@
 				}
 			}
 		],
+		"parameters": {
+			"jobid": {
+				"type": "int"
+			},
+			"runpriority": {
+				"type": "int"
+			},
+			"MasterPipelineRunId": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
