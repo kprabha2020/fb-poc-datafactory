@@ -22,17 +22,8 @@
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "DS_AzSQL_Staging",
-						"type": "DatasetReference",
-						"parameters": {
-							"ServerName": {
-								"value": "sqlserverforpoc.database.windows.net",
-								"type": "Expression"
-							},
-							"DatabaseName": "platform-config",
-							"UserName": "aadmin",
-							"PasswordSecret": "SQLServerpasswordsecret"
-						}
+						"referenceName": "DS_AzSQL_Config",
+						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
 				}
@@ -66,7 +57,21 @@
 									"referenceName": "Execute Process Steps",
 									"type": "PipelineReference"
 								},
-								"waitOnCompletion": false
+								"waitOnCompletion": false,
+								"parameters": {
+									"jobid": {
+										"value": "@item().jobid",
+										"type": "Expression"
+									},
+									"runpriority": {
+										"value": "@item().runpriority",
+										"type": "Expression"
+									},
+									"MasterPipelineRunId": {
+										"value": "@pipeline().RunId",
+										"type": "Expression"
+									}
+								}
 							}
 						}
 					]
