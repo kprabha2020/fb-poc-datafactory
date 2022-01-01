@@ -17,18 +17,29 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[dbo].[getExecutionProcessSteps]",
+						"storedProcedureParameters": {
+							"jobid": {
+								"type": "Int32",
+								"value": {
+									"value": "@pipeline().parameters.jobid",
+									"type": "Expression"
+								}
+							},
+							"runPriority": {
+								"type": "Int32",
+								"value": {
+									"value": "@pipeline().parameters.runpriority",
+									"type": "Expression"
+								}
+							}
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "DS_AzSQL_Staging",
-						"type": "DatasetReference",
-						"parameters": {
-							"ServerName": "sqlserverforpoc.database.windows.net",
-							"DatabaseName": "platform-config",
-							"UserName": "aadmin",
-							"PasswordSecret": "SQLServerpasswordsecret"
-						}
+						"referenceName": "DS_AzSQL_Config",
+						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
 				}
