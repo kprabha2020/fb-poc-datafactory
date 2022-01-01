@@ -35,6 +35,12 @@
 			},
 			"PasswordSecret": {
 				"type": "string"
+			},
+			"TableSchema": {
+				"type": "string"
+			},
+			"TableName": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -42,7 +48,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": {
-				"value": "@dataset().SchemaName",
+				"value": "@dataset().TableSchema",
 				"type": "Expression"
 			},
 			"table": {
