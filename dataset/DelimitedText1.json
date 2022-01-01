@@ -2,61 +2,46 @@
 	"name": "DelimitedText1",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "LS_CSV_Files",
-			"type": "LinkedServiceReference"
+			"referenceName": "LS_BlobStorageAccount_Generic",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"StorageAccountName": {
+					"value": "@dataset().storageAccountName",
+					"type": "Expression"
+				},
+				"StorageAccountSecret": {
+					"value": "@dataset().storageAccountSecret",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			},
+			"storageAccountName": {
+				"type": "string"
+			},
+			"storageAccountSecret": {
+				"type": "string"
+			}
 		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "ITEM.csv",
+				"fileName": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
 				"container": "sourcedata"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
+			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": [
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			}
-		]
+		"schema": []
 	}
 }
