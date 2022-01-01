@@ -8,6 +8,9 @@
 			"transformations": [
 				{
 					"name": "ItemInput"
+				},
+				{
+					"name": "output1"
 				}
 			],
 			"scriptLines": [
@@ -26,7 +29,8 @@
 				"          HIDDEN_REC as string,",
 				"          COOKTIME as string",
 				"     ),",
-				"     order: 0) ~> ItemInput"
+				"     order: 0) ~> ItemInput",
+				"ItemInput output() ~> output1"
 			]
 		}
 	}
