@@ -33,7 +33,43 @@
 							"UserName": "aadmin",
 							"PasswordSecret": "SQLServerpasswordsecret"
 						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
 					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup1').output.value",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Execute Process Steps",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "Execute Process Steps",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": false
+							}
+						}
+					]
 				}
 			}
 		],
