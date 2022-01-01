@@ -36,6 +36,17 @@
 				]
 			}
 		],
+		"parameters": {
+			"jobid": {
+				"type": "int"
+			},
+			"ProcessStepId": {
+				"type": "int"
+			},
+			"MasterPipelineId": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
