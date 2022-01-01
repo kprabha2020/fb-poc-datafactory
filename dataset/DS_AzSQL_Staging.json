@@ -1,5 +1,5 @@
 {
-	"name": "AzureSqlTable1",
+	"name": "DS_AzSQL_Staging",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_AZ_SQL",
