@@ -1,0 +1,69 @@
+{
+	"name": "AzureSqlTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AZ_SQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ITEMID",
+				"type": "varchar"
+			},
+			{
+				"name": "DESC",
+				"type": "varchar"
+			},
+			{
+				"name": "DIVISIONID",
+				"type": "varchar"
+			},
+			{
+				"name": "COST",
+				"type": "varchar"
+			},
+			{
+				"name": "MEAL",
+				"type": "varchar"
+			},
+			{
+				"name": "PLUID",
+				"type": "varchar"
+			},
+			{
+				"name": "BARCODE",
+				"type": "varchar"
+			},
+			{
+				"name": "SCALE",
+				"type": "varchar"
+			},
+			{
+				"name": "RESTOID",
+				"type": "varchar"
+			},
+			{
+				"name": "FUNCTIONID",
+				"type": "varchar"
+			},
+			{
+				"name": "CLASSID",
+				"type": "varchar"
+			},
+			{
+				"name": "HIDDEN_REC",
+				"type": "varchar"
+			},
+			{
+				"name": "COOKTIME",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "Staging",
+			"table": "ITEM"
+		}
+	}
+}
