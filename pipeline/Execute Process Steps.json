@@ -56,7 +56,18 @@
 							"typeProperties": {
 								"cases": [
 									{
-										"value": "IngestionProcess"
+										"value": "IngestionProcess",
+										"activities": [
+											{
+												"name": "Execute Ingestion Process",
+												"type": "ExecutePipeline",
+												"dependsOn": [],
+												"userProperties": [],
+												"typeProperties": {
+													"waitOnCompletion": true
+												}
+											}
+										]
 									}
 								]
 							}
