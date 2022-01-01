@@ -12,6 +12,9 @@
 			}
 		},
 		"parameters": {
+			"SchemaName": {
+				"type": "string"
+			},
 			"TableName": {
 				"type": "string"
 			}
@@ -20,7 +23,10 @@
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "Staging",
+			"schema": {
+				"value": "@dataset().SchemaName",
+				"type": "Expression"
+			},
 			"table": {
 				"value": "@dataset().TableName",
 				"type": "Expression"
