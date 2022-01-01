@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "farmerboys-poc-datafactory"
+		},
+		"LS_AZ_SQL_connectionString": {
+			"value": ""
+		},
+		"LS_CSV_Files_connectionString": {
+			"value": ""
+		},
+		"AZ_KeyVault_properties_typeProperties_baseUrl": {
+			"value": "https://farmerboys-azkeyvault.vault.azure.net/"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

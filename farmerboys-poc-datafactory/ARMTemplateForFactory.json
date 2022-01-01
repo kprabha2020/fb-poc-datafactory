@@ -1,0 +1,359 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "farmerboys-poc-datafactory"
+		},
+		"LS_AZ_SQL_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_AZ_SQL'"
+		},
+		"LS_CSV_Files_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_CSV_Files'"
+		},
+		"AZ_KeyVault_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://farmerboys-azkeyvault.vault.azure.net/"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_AZ_SQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ITEMID",
+						"type": "varchar"
+					},
+					{
+						"name": "DESC",
+						"type": "varchar"
+					},
+					{
+						"name": "DIVISIONID",
+						"type": "varchar"
+					},
+					{
+						"name": "COST",
+						"type": "varchar"
+					},
+					{
+						"name": "MEAL",
+						"type": "varchar"
+					},
+					{
+						"name": "PLUID",
+						"type": "varchar"
+					},
+					{
+						"name": "BARCODE",
+						"type": "varchar"
+					},
+					{
+						"name": "SCALE",
+						"type": "varchar"
+					},
+					{
+						"name": "RESTOID",
+						"type": "varchar"
+					},
+					{
+						"name": "FUNCTIONID",
+						"type": "varchar"
+					},
+					{
+						"name": "CLASSID",
+						"type": "varchar"
+					},
+					{
+						"name": "HIDDEN_REC",
+						"type": "varchar"
+					},
+					{
+						"name": "COOKTIME",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "Staging",
+					"table": "ITEM"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_AZ_SQL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_CSV_Files",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "ITEM.csv",
+						"container": "sourcedata"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_CSV_Files')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AZ_KeyVault')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('AZ_KeyVault_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_AZ_SQL')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('LS_AZ_SQL_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_CSV_Files')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('LS_CSV_Files_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText1",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable1",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Flowlet1",
+							"flowlet": {
+								"referenceName": "flowlet1",
+								"type": "DataFlowReference",
+								"parameters": {}
+							}
+						}
+					],
+					"script": "source(output(\n\t\tITEMID as string,\n\t\tDESC as string,\n\t\tDIVISIONID as string,\n\t\tCOST as string,\n\t\tMEAL as string,\n\t\tPLUID as string,\n\t\tBARCODE as string,\n\t\tSCALE as string,\n\t\tRESTOID as string,\n\t\tFUNCTIONID as string,\n\t\tCLASSID as string,\n\t\tHIDDEN_REC as string,\n\t\tCOOKTIME as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tskipLines: 1) ~> source1\nsource1 compose(mapColumn(\n\t\tITEMID,\n\t\tDESC,\n\t\tDIVISIONID,\n\t\tCOST,\n\t\tMEAL,\n\t\tPLUID,\n\t\tBARCODE,\n\t\tSCALE,\n\t\tRESTOID,\n\t\tFUNCTIONID,\n\t\tCLASSID,\n\t\tHIDDEN_REC,\n\t\tCOOKTIME\n\t),\n\tcomposition: 'flowlet1') ~> Flowlet1@(output1)\nFlowlet1@output1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tITEMID as string,\n\t\tDESC as string,\n\t\tDIVISIONID as string,\n\t\tCOST as string,\n\t\tMEAL as string,\n\t\tPLUID as string,\n\t\tBARCODE as string,\n\t\tSCALE as string,\n\t\tRESTOID as string,\n\t\tFUNCTIONID as string,\n\t\tCLASSID as string,\n\t\tHIDDEN_REC as string,\n\t\tCOOKTIME as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\tITEMID,\n\t\tDESC,\n\t\tDIVISIONID,\n\t\tCOST,\n\t\tMEAL,\n\t\tPLUID,\n\t\tBARCODE,\n\t\tSCALE,\n\t\tRESTOID,\n\t\tFUNCTIONID,\n\t\tCLASSID,\n\t\tHIDDEN_REC,\n\t\tCOOKTIME\n\t)) ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/flowlet1')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/flowlet1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Flowlet",
+				"typeProperties": {
+					"sources": [],
+					"sinks": [],
+					"transformations": [
+						{
+							"name": "Select1"
+						},
+						{
+							"name": "ItemInput"
+						},
+						{
+							"name": "output1"
+						}
+					],
+					"scriptLines": [
+						"input(output(",
+						"          ITEMID as string,",
+						"          DESC as string,",
+						"          DIVISIONID as string,",
+						"          COST as string,",
+						"          MEAL as string,",
+						"          PLUID as string,",
+						"          BARCODE as string,",
+						"          SCALE as string,",
+						"          RESTOID as string,",
+						"          FUNCTIONID as string,",
+						"          CLASSID as string,",
+						"          HIDDEN_REC as string,",
+						"          COOKTIME as string",
+						"     ),",
+						"     order: 0) ~> ItemInput",
+						"ItemInput select(mapColumn(",
+						"          ITEMID,",
+						"          DESC,",
+						"          DIVISIONID,",
+						"          COST,",
+						"          MEAL,",
+						"          PLUID,",
+						"          BARCODE,",
+						"          SCALE,",
+						"          RESTOID,",
+						"          FUNCTIONID,",
+						"          CLASSID,",
+						"          HIDDEN_REC,",
+						"          COOKTIME",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> Select1",
+						"Select1 output() ~> output1"
+					]
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
