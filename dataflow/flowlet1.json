@@ -7,14 +7,26 @@
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "input1"
+					"name": "ItemInput"
 				}
 			],
 			"scriptLines": [
 				"input(output(",
-				"          ITEMID as string",
+				"          ITEMID as string,",
+				"          DESC as string,",
+				"          DIVISIONID as string,",
+				"          COST as string,",
+				"          MEAL as string,",
+				"          PLUID as string,",
+				"          BARCODE as string,",
+				"          SCALE as string,",
+				"          RESTOID as string,",
+				"          FUNCTIONID as string,",
+				"          CLASSID as string,",
+				"          HIDDEN_REC as string,",
+				"          COOKTIME as string",
 				"     ),",
-				"     order: 0) ~> input1"
+				"     order: 0) ~> ItemInput"
 			]
 		}
 	}
