@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LS_AZ_SQL'"
 		},
+		"LS_BlobStorageAccount_Generic_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_BlobStorageAccount_Generic'"
+		},
 		"LS_CSV_Files_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LS_CSV_Files'"
@@ -46,11 +50,14 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"LS_CSV_Files_connectionString": {
+						"value": "[parameters('LS_CSV_Files_connectionString')]"
+					},
 					"LS_AZ_SQL_connectionString": {
 						"value": "[parameters('LS_AZ_SQL_connectionString')]"
 					},
-					"LS_CSV_Files_connectionString": {
-						"value": "[parameters('LS_CSV_Files_connectionString')]"
+					"LS_BlobStorageAccount_Generic_connectionString": {
+						"value": "[parameters('LS_BlobStorageAccount_Generic_connectionString')]"
 					},
 					"AZ_KeyVault_properties_typeProperties_baseUrl": {
 						"value": "[parameters('AZ_KeyVault_properties_typeProperties_baseUrl')]"

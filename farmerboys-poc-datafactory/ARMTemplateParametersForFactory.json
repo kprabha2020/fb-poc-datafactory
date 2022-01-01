@@ -8,6 +8,9 @@
 		"LS_AZ_SQL_connectionString": {
 			"value": ""
 		},
+		"LS_BlobStorageAccount_Generic_connectionString": {
+			"value": ""
+		},
 		"LS_CSV_Files_connectionString": {
 			"value": ""
 		},
