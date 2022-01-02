@@ -147,7 +147,36 @@
 										]
 									},
 									{
-										"value": "Publish"
+										"value": "Publish",
+										"activities": [
+											{
+												"name": "Publish Process",
+												"type": "ExecutePipeline",
+												"dependsOn": [],
+												"userProperties": [],
+												"typeProperties": {
+													"pipeline": {
+														"referenceName": "Publish Process",
+														"type": "PipelineReference"
+													},
+													"waitOnCompletion": true,
+													"parameters": {
+														"jobid": {
+															"value": "@item().jobId",
+															"type": "Expression"
+														},
+														"ProcessStepId": {
+															"value": "@item().ProcessStepId",
+															"type": "Expression"
+														},
+														"MasterPipelineId": {
+															"value": "@pipeline().parameters.MasterPipelineRunId",
+															"type": "Expression"
+														}
+													}
+												}
+											}
+										]
 									}
 								]
 							}
