@@ -18,7 +18,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "SELECT * FROM metadata.vw_PublishProcess WHERE isActive=1 AND jobId=@{pipeline().parameters.jobid}",
+							"value": "SELECT * FROM metadata.vw_PublishProcess WHERE isActive=1 AND jobId=@{pipeline().parameters.jobid} AND processStepId=@{pipeline().parameters.ProcessStepId}",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
