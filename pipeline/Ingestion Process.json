@@ -81,7 +81,10 @@
 									"additionalColumns": [
 										{
 											"name": "restoId",
-											"value": "$$COLUMN:1008"
+											"value": {
+												"value": "@pipeline().parameters.restoId",
+												"type": "Expression"
+											}
 										}
 									],
 									"storeSettings": {
