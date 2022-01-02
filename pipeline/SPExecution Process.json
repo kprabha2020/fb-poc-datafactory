@@ -17,22 +17,9 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderStoredProcedureName": "[dbo].[getIngestionProcess]",
-						"storedProcedureParameters": {
-							"jobid": {
-								"type": "Int32",
-								"value": {
-									"value": "@pipeline().parameters.jobid",
-									"type": "Expression"
-								}
-							},
-							"processStepId": {
-								"type": "Int32",
-								"value": {
-									"value": "@pipeline().parameters.ProcessStepId",
-									"type": "Expression"
-								}
-							}
+						"sqlReaderQuery": {
+							"value": "SELECT * FROM metadata.vw_SPExecutionProcess WHERE isActive=1 AND jobId=@{pipeline().parameters.jobid}",
+							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
@@ -64,8 +51,8 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Copy data1",
-							"type": "Copy",
+							"name": "Stored procedure1",
+							"type": "SqlServerStoredProcedure",
 							"dependsOn": [],
 							"policy": {
 								"timeout": "7.00:00:00",
@@ -76,71 +63,33 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"source": {
-									"type": "DelimitedTextSource",
-									"storeSettings": {
-										"type": "AzureBlobStorageReadSettings",
-										"recursive": true,
-										"enablePartitionDiscovery": false
-									},
-									"formatSettings": {
-										"type": "DelimitedTextReadSettings"
-									}
-								},
-								"sink": {
-									"type": "AzureSqlSink"
-								},
-								"enableStaging": false
+								"storedProcedureName": {
+									"value": "@item().storedProcName",
+									"type": "Expression"
+								}
 							},
-							"inputs": [
-								{
-									"referenceName": "DS_CSV_File",
-									"type": "DatasetReference",
-									"parameters": {
-										"filename": {
-											"value": "@item().srcdataFileName",
-											"type": "Expression"
-										},
-										"storageAccountName": {
-											"value": "@item().srcStorageContainerName",
-											"type": "Expression"
-										},
-										"storageAccountSecret": {
-											"value": "@item().srcStorageContainerKVSecret",
-											"type": "Expression"
-										}
+							"linkedServiceName": {
+								"referenceName": "LS_AZ_SQL",
+								"type": "LinkedServiceReference",
+								"parameters": {
+									"ServerName": {
+										"value": "@item().tgtserverName",
+										"type": "Expression"
+									},
+									"DatabaseName": {
+										"value": "@item().tgtdatabaseName",
+										"type": "Expression"
+									},
+									"UserName": {
+										"value": "@item().tgtdbUserName",
+										"type": "Expression"
+									},
+									"PasswordSecret": {
+										"value": "@item().tgtdbUserKVPasswordSecret",
+										"type": "Expression"
 									}
 								}
-							],
-							"outputs": [
-								{
-									"referenceName": "DS_AzSQL_Staging",
-									"type": "DatasetReference",
-									"parameters": {
-										"ServerName": {
-											"value": "@item().tgtserverName",
-											"type": "Expression"
-										},
-										"DatabaseName": {
-											"value": "@item().tgtdatabaseName",
-											"type": "Expression"
-										},
-										"UserName": {
-											"value": "@item().tgtdbUserName",
-											"type": "Expression"
-										},
-										"PasswordSecret": {
-											"value": "@item().tgtdbUserKVPasswordSecret",
-											"type": "Expression"
-										},
-										"TableSchema": "Staging",
-										"TableName": {
-											"value": "@item().tgtTableName",
-											"type": "Expression"
-										}
-									}
-								}
-							]
+							}
 						}
 					]
 				}
