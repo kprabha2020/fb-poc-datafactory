@@ -163,7 +163,7 @@
 				"type": "string"
 			},
 			"restoId": {
-				"type": "int"
+				"type": "string"
 			}
 		},
 		"annotations": []
