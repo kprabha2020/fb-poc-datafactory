@@ -111,7 +111,36 @@
 										]
 									},
 									{
-										"value": "SPExecution"
+										"value": "SPExecution",
+										"activities": [
+											{
+												"name": "SPExecution Process",
+												"type": "ExecutePipeline",
+												"dependsOn": [],
+												"userProperties": [],
+												"typeProperties": {
+													"pipeline": {
+														"referenceName": "SPExecution Process",
+														"type": "PipelineReference"
+													},
+													"waitOnCompletion": true,
+													"parameters": {
+														"jobid": {
+															"value": "@item().jobId",
+															"type": "Expression"
+														},
+														"ProcessStepId": {
+															"value": "@item().ProcessStepId",
+															"type": "Expression"
+														},
+														"MasterPipelineId": {
+															"value": "@pipeline().parameters.MasterPipelineRunId",
+															"type": "Expression"
+														}
+													}
+												}
+											}
+										]
 									},
 									{
 										"value": "Publish"
