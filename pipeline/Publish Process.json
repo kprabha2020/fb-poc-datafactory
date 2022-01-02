@@ -126,7 +126,10 @@
 											"value": "@item().tgtdbUserKVPasswordSecret",
 											"type": "Expression"
 										},
-										"TableSchema": "Staging",
+										"TableSchema": {
+											"value": "@item().tgtTableSchema",
+											"type": "Expression"
+										},
 										"TableName": {
 											"value": "@item().tgtTableName",
 											"type": "Expression"
