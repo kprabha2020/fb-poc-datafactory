@@ -110,7 +110,7 @@
 											"sink": {
 												"type": "AzureSqlSink",
 												"preCopyScript": {
-													"value": "TRUNCATE TABLE @{item().tgtTableSchema}.@{item().tgtTableName}",
+													"value": "DELETE FROM @{item().tgtTableSchema}.@{item().tgtTableName} WHERE RestoId=@{pipeline().parameters.restoId}",
 													"type": "Expression"
 												},
 												"disableMetricsCollection": false
@@ -199,7 +199,7 @@
 											"sink": {
 												"type": "AzureSqlSink",
 												"preCopyScript": {
-													"value": "TRUNCATE TABLE @{item().tgtTableSchema}.@{item().tgtTableName}",
+													"value": "DELETE FROM @{item().tgtTableSchema}.@{item().tgtTableName} WHERE RestoId=@{pipeline().parameters.restoId}",
 													"type": "Expression"
 												},
 												"disableMetricsCollection": false
