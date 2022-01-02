@@ -165,7 +165,7 @@
 								],
 								"ifTrueActivities": [
 									{
-										"name": "Copy data1_copy1",
+										"name": "Copy data1 without RESTOID",
 										"type": "Copy",
 										"dependsOn": [],
 										"policy": {
