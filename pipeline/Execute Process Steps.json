@@ -105,6 +105,12 @@
 												}
 											}
 										]
+									},
+									{
+										"value": "SPExecution"
+									},
+									{
+										"value": "Publish"
 									}
 								]
 							}

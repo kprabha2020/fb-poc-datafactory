@@ -1,0 +1,162 @@
+{
+	"name": "SPExecution Process",
+	"properties": {
+		"activities": [
+			{
+				"name": "SPExecution",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[dbo].[getIngestionProcess]",
+						"storedProcedureParameters": {
+							"jobid": {
+								"type": "Int32",
+								"value": {
+									"value": "@pipeline().parameters.jobid",
+									"type": "Expression"
+								}
+							},
+							"processStepId": {
+								"type": "Int32",
+								"value": {
+									"value": "@pipeline().parameters.ProcessStepId",
+									"type": "Expression"
+								}
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_AzSQL_Config",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "SPExecution",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Ingestion').output.value",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "AzureSqlSink"
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_CSV_File",
+									"type": "DatasetReference",
+									"parameters": {
+										"filename": {
+											"value": "@item().srcdataFileName",
+											"type": "Expression"
+										},
+										"storageAccountName": {
+											"value": "@item().srcStorageContainerName",
+											"type": "Expression"
+										},
+										"storageAccountSecret": {
+											"value": "@item().srcStorageContainerKVSecret",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_AzSQL_Staging",
+									"type": "DatasetReference",
+									"parameters": {
+										"ServerName": {
+											"value": "@item().tgtserverName",
+											"type": "Expression"
+										},
+										"DatabaseName": {
+											"value": "@item().tgtdatabaseName",
+											"type": "Expression"
+										},
+										"UserName": {
+											"value": "@item().tgtdbUserName",
+											"type": "Expression"
+										},
+										"PasswordSecret": {
+											"value": "@item().tgtdbUserKVPasswordSecret",
+											"type": "Expression"
+										},
+										"TableSchema": "Staging",
+										"TableName": {
+											"value": "@item().tgtTableName",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"jobid": {
+				"type": "int"
+			},
+			"ProcessStepId": {
+				"type": "int"
+			},
+			"MasterPipelineId": {
+				"type": "string"
+			}
+		},
+		"annotations": []
+	}
+}
