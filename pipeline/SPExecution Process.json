@@ -66,6 +66,12 @@
 								"storedProcedureName": {
 									"value": "@item().storedProcName",
 									"type": "Expression"
+								},
+								"storedProcedureParameters": {
+									"RestoId": {
+										"value": "",
+										"type": "String"
+									}
 								}
 							},
 							"linkedServiceName": {
@@ -103,6 +109,9 @@
 				"type": "int"
 			},
 			"MasterPipelineId": {
+				"type": "string"
+			},
+			"restoId": {
 				"type": "string"
 			}
 		},
