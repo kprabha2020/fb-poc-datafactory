@@ -192,7 +192,12 @@
 												}
 											},
 											"sink": {
-												"type": "AzureSqlSink"
+												"type": "AzureSqlSink",
+												"preCopyScript": {
+													"value": "TRUNCATE TABLE @{item().tgtTableSchema}.@{item().tgtTableName}",
+													"type": "Expression"
+												},
+												"disableMetricsCollection": false
 											},
 											"enableStaging": false
 										},
