@@ -155,6 +155,9 @@
 			},
 			"MasterPipelineId": {
 				"type": "string"
+			},
+			"restoId": {
+				"type": "string"
 			}
 		},
 		"annotations": []
