@@ -80,8 +80,8 @@
 									"type": "DelimitedTextSource",
 									"additionalColumns": [
 										{
-											"name": "RestoId",
-											"value": ""
+											"name": "restoId",
+											"value": "$$COLUMN:1008"
 										}
 									],
 									"storeSettings": {
