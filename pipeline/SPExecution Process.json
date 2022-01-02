@@ -58,7 +58,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Ingestion').output.value",
+						"value": "@activity('SPExecution').output.value",
 						"type": "Expression"
 					},
 					"isSequential": true,
