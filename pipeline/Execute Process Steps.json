@@ -172,6 +172,10 @@
 														"MasterPipelineId": {
 															"value": "@pipeline().parameters.MasterPipelineRunId",
 															"type": "Expression"
+														},
+														"restoId": {
+															"value": "@pipeline().parameters.restoId",
+															"type": "Expression"
 														}
 													}
 												}
