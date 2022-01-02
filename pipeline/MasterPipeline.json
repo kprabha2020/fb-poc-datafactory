@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT jobId, runPriority FROM \nmetadata.ProcessSteps\nWHERE isActive=1\nGROUP BY jobId,runPriority\nORDER BY runPriority",
+						"sqlReaderQuery": "SELECT jobId, runPriority,restoId FROM \nmetadata.ProcessSteps\nWHERE isActive=1\nGROUP BY jobId,runPriority,restoId\nORDER BY runPriority",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -69,6 +69,10 @@
 									},
 									"MasterPipelineRunId": {
 										"value": "@pipeline().RunId",
+										"type": "Expression"
+									},
+									"restoId": {
+										"value": "@item().restoId",
 										"type": "Expression"
 									}
 								}
