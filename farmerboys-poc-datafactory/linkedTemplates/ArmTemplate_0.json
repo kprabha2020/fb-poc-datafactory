@@ -1342,6 +1342,37 @@
 				"[concat(variables('factoryId'), '/datasets/DS_AzSQL_Config')]",
 				"[concat(variables('factoryId'), '/pipelines/Execute Process Steps')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger1')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "MasterPipeline",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Hour",
+						"interval": 8,
+						"startTime": "2022-01-02T09:54:00Z",
+						"endTime": "2022-01-05T09:54:00Z",
+						"timeZone": "UTC"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/MasterPipeline')]"
+			]
 		}
 	]
 }
