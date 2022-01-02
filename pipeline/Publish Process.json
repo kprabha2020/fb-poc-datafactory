@@ -17,22 +17,9 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderStoredProcedureName": "[dbo].[getIngestionProcess]",
-						"storedProcedureParameters": {
-							"jobid": {
-								"type": "Int32",
-								"value": {
-									"value": "@pipeline().parameters.jobid",
-									"type": "Expression"
-								}
-							},
-							"processStepId": {
-								"type": "Int32",
-								"value": {
-									"value": "@pipeline().parameters.ProcessStepId",
-									"type": "Expression"
-								}
-							}
+						"sqlReaderQuery": {
+							"value": "SELECT * FROM metadata.vw_PublishProcess WHERE isActive=1 AND jobId=@{pipeline().parameters.jobid}",
+							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
@@ -77,15 +64,9 @@
 							"userProperties": [],
 							"typeProperties": {
 								"source": {
-									"type": "DelimitedTextSource",
-									"storeSettings": {
-										"type": "AzureBlobStorageReadSettings",
-										"recursive": true,
-										"enablePartitionDiscovery": false
-									},
-									"formatSettings": {
-										"type": "DelimitedTextReadSettings"
-									}
+									"type": "AzureSqlSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
 								},
 								"sink": {
 									"type": "AzureSqlSink"
@@ -94,19 +75,31 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_CSV_File",
+									"referenceName": "DS_AzSQL_Staging",
 									"type": "DatasetReference",
 									"parameters": {
-										"filename": {
-											"value": "@item().srcdataFileName",
+										"ServerName": {
+											"value": "@item().srcserverName",
 											"type": "Expression"
 										},
-										"storageAccountName": {
-											"value": "@item().srcStorageContainerName",
+										"DatabaseName": {
+											"value": "@item().srcdatabaseName",
 											"type": "Expression"
 										},
-										"storageAccountSecret": {
-											"value": "@item().srcStorageContainerKVSecret",
+										"UserName": {
+											"value": "@item().srcdbUserName",
+											"type": "Expression"
+										},
+										"PasswordSecret": {
+											"value": "@item().srcdbUserKVPasswordSecret",
+											"type": "Expression"
+										},
+										"TableSchema": {
+											"value": "@item().srcTableSchema",
+											"type": "Expression"
+										},
+										"TableName": {
+											"value": "@item().srcTableName",
 											"type": "Expression"
 										}
 									}
