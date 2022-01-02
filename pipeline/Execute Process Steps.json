@@ -87,7 +87,7 @@
 														"referenceName": "Ingestion Process",
 														"type": "PipelineReference"
 													},
-													"waitOnCompletion": false,
+													"waitOnCompletion": true,
 													"parameters": {
 														"jobid": {
 															"value": "@item().jobId",
