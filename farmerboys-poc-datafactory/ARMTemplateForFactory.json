@@ -142,6 +142,12 @@
 														}
 													}
 												]
+											},
+											{
+												"value": "SPExecution"
+											},
+											{
+												"value": "Publish"
 											}
 										]
 									}
@@ -163,6 +169,9 @@
 					},
 					"MasterPipelineRunId": {
 						"type": "string"
+					},
+					"restoId": {
+						"type": "int"
 					}
 				},
 				"annotations": []
@@ -241,83 +250,187 @@
 							"isSequential": true,
 							"activities": [
 								{
-									"name": "Copy data1",
-									"type": "Copy",
+									"name": "If Condition1",
+									"type": "IfCondition",
 									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
 									"userProperties": [],
 									"typeProperties": {
-										"source": {
-											"type": "DelimitedTextSource",
-											"storeSettings": {
-												"type": "AzureBlobStorageReadSettings",
-												"recursive": true,
-												"enablePartitionDiscovery": false
-											},
-											"formatSettings": {
-												"type": "DelimitedTextReadSettings"
-											}
+										"expression": {
+											"value": "@item().IsSourceContainsRestoId",
+											"type": "Expression"
 										},
-										"sink": {
-											"type": "AzureSqlSink"
-										},
-										"enableStaging": false
-									},
-									"inputs": [
-										{
-											"referenceName": "DS_CSV_File",
-											"type": "DatasetReference",
-											"parameters": {
-												"filename": {
-													"value": "@item().srcdataFileName",
-													"type": "Expression"
+										"ifFalseActivities": [
+											{
+												"name": "Copy data1",
+												"type": "Copy",
+												"dependsOn": [],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
 												},
-												"storageAccountName": {
-													"value": "@item().srcStorageContainerName",
-													"type": "Expression"
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "DelimitedTextSource",
+														"additionalColumns": [
+															{
+																"name": "RESTOID",
+																"value": {
+																	"value": "@pipeline().parameters.restoId",
+																	"type": "Expression"
+																}
+															}
+														],
+														"storeSettings": {
+															"type": "AzureBlobStorageReadSettings",
+															"recursive": true,
+															"enablePartitionDiscovery": false
+														},
+														"formatSettings": {
+															"type": "DelimitedTextReadSettings"
+														}
+													},
+													"sink": {
+														"type": "AzureSqlSink"
+													},
+													"enableStaging": false
 												},
-												"storageAccountSecret": {
-													"value": "@item().srcStorageContainerKVSecret",
-													"type": "Expression"
-												}
+												"inputs": [
+													{
+														"referenceName": "DS_CSV_File",
+														"type": "DatasetReference",
+														"parameters": {
+															"filename": {
+																"value": "@item().srcdataFileName",
+																"type": "Expression"
+															},
+															"storageAccountName": {
+																"value": "@item().srcStorageContainerName",
+																"type": "Expression"
+															},
+															"storageAccountSecret": {
+																"value": "@item().srcStorageContainerKVSecret",
+																"type": "Expression"
+															}
+														}
+													}
+												],
+												"outputs": [
+													{
+														"referenceName": "DS_AzSQL_Staging",
+														"type": "DatasetReference",
+														"parameters": {
+															"ServerName": {
+																"value": "@item().tgtserverName",
+																"type": "Expression"
+															},
+															"DatabaseName": {
+																"value": "@item().tgtdatabaseName",
+																"type": "Expression"
+															},
+															"UserName": {
+																"value": "@item().tgtdbUserName",
+																"type": "Expression"
+															},
+															"PasswordSecret": {
+																"value": "@item().tgtdbUserKVPasswordSecret",
+																"type": "Expression"
+															},
+															"TableSchema": "Staging",
+															"TableName": {
+																"value": "@item().tgtTableName",
+																"type": "Expression"
+															}
+														}
+													}
+												]
 											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "DS_AzSQL_Staging",
-											"type": "DatasetReference",
-											"parameters": {
-												"ServerName": {
-													"value": "@item().tgtserverName",
-													"type": "Expression"
+										],
+										"ifTrueActivities": [
+											{
+												"name": "Copy data1_copy1",
+												"type": "Copy",
+												"dependsOn": [],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
 												},
-												"DatabaseName": {
-													"value": "@item().tgtdatabaseName",
-													"type": "Expression"
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "DelimitedTextSource",
+														"storeSettings": {
+															"type": "AzureBlobStorageReadSettings",
+															"recursive": true,
+															"enablePartitionDiscovery": false
+														},
+														"formatSettings": {
+															"type": "DelimitedTextReadSettings"
+														}
+													},
+													"sink": {
+														"type": "AzureSqlSink"
+													},
+													"enableStaging": false
 												},
-												"UserName": {
-													"value": "@item().tgtdbUserName",
-													"type": "Expression"
-												},
-												"PasswordSecret": {
-													"value": "@item().tgtdbUserKVPasswordSecret",
-													"type": "Expression"
-												},
-												"TableSchema": "Staging",
-												"TableName": {
-													"value": "@item().tgtTableName",
-													"type": "Expression"
-												}
+												"inputs": [
+													{
+														"referenceName": "DS_CSV_File",
+														"type": "DatasetReference",
+														"parameters": {
+															"filename": {
+																"value": "@item().srcdataFileName",
+																"type": "Expression"
+															},
+															"storageAccountName": {
+																"value": "@item().srcStorageContainerName",
+																"type": "Expression"
+															},
+															"storageAccountSecret": {
+																"value": "@item().srcStorageContainerKVSecret",
+																"type": "Expression"
+															}
+														}
+													}
+												],
+												"outputs": [
+													{
+														"referenceName": "DS_AzSQL_Staging",
+														"type": "DatasetReference",
+														"parameters": {
+															"ServerName": {
+																"value": "@item().tgtserverName",
+																"type": "Expression"
+															},
+															"DatabaseName": {
+																"value": "@item().tgtdatabaseName",
+																"type": "Expression"
+															},
+															"UserName": {
+																"value": "@item().tgtdbUserName",
+																"type": "Expression"
+															},
+															"PasswordSecret": {
+																"value": "@item().tgtdbUserKVPasswordSecret",
+																"type": "Expression"
+															},
+															"TableSchema": "Staging",
+															"TableName": {
+																"value": "@item().tgtTableName",
+																"type": "Expression"
+															}
+														}
+													}
+												]
 											}
-										}
-									]
+										]
+									}
 								}
 							]
 						}
@@ -335,6 +448,9 @@
 						"type": "int"
 					},
 					"MasterPipelineId": {
+						"type": "string"
+					},
+					"restoId": {
 						"type": "string"
 					}
 				},
@@ -367,7 +483,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
-								"sqlReaderQuery": "SELECT jobId, runPriority FROM \nmetadata.ProcessSteps\nWHERE isActive=1\nGROUP BY jobId,runPriority\nORDER BY runPriority",
+								"sqlReaderQuery": "SELECT jobId, runPriority,restoId FROM \nmetadata.ProcessSteps\nWHERE isActive=1\nGROUP BY jobId,runPriority,restoId\nORDER BY runPriority",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -408,7 +524,7 @@
 											"referenceName": "Execute Process Steps",
 											"type": "PipelineReference"
 										},
-										"waitOnCompletion": false,
+										"waitOnCompletion": true,
 										"parameters": {
 											"jobid": {
 												"value": "@item().jobid",
@@ -420,6 +536,10 @@
 											},
 											"MasterPipelineRunId": {
 												"value": "@pipeline().RunId",
+												"type": "Expression"
+											},
+											"restoId": {
+												"value": "@item().restoId",
 												"type": "Expression"
 											}
 										}
@@ -471,7 +591,7 @@
 					"type": "LinkedServiceReference",
 					"parameters": {
 						"ServerName": {
-							"value": "@dataset().DatabaseName",
+							"value": "@dataset().ServerName",
 							"type": "Expression"
 						},
 						"DatabaseName": {
@@ -838,6 +958,354 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Publish Process')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Publish",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderStoredProcedureName": "[[dbo].[getIngestionProcess]",
+								"storedProcedureParameters": {
+									"jobid": {
+										"type": "Int32",
+										"value": {
+											"value": "@pipeline().parameters.jobid",
+											"type": "Expression"
+										}
+									},
+									"processStepId": {
+										"type": "Int32",
+										"value": {
+											"value": "@pipeline().parameters.ProcessStepId",
+											"type": "Expression"
+										}
+									}
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "DS_AzSQL_Config",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Publish",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Publish').output.value",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Copy data1",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "DelimitedTextSource",
+											"storeSettings": {
+												"type": "AzureBlobStorageReadSettings",
+												"recursive": true,
+												"enablePartitionDiscovery": false
+											},
+											"formatSettings": {
+												"type": "DelimitedTextReadSettings"
+											}
+										},
+										"sink": {
+											"type": "AzureSqlSink"
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "DS_CSV_File",
+											"type": "DatasetReference",
+											"parameters": {
+												"filename": {
+													"value": "@item().srcdataFileName",
+													"type": "Expression"
+												},
+												"storageAccountName": {
+													"value": "@item().srcStorageContainerName",
+													"type": "Expression"
+												},
+												"storageAccountSecret": {
+													"value": "@item().srcStorageContainerKVSecret",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "DS_AzSQL_Staging",
+											"type": "DatasetReference",
+											"parameters": {
+												"ServerName": {
+													"value": "@item().tgtserverName",
+													"type": "Expression"
+												},
+												"DatabaseName": {
+													"value": "@item().tgtdatabaseName",
+													"type": "Expression"
+												},
+												"UserName": {
+													"value": "@item().tgtdbUserName",
+													"type": "Expression"
+												},
+												"PasswordSecret": {
+													"value": "@item().tgtdbUserKVPasswordSecret",
+													"type": "Expression"
+												},
+												"TableSchema": "Staging",
+												"TableName": {
+													"value": "@item().tgtTableName",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"jobid": {
+						"type": "int"
+					},
+					"ProcessStepId": {
+						"type": "int"
+					},
+					"MasterPipelineId": {
+						"type": "string"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_AzSQL_Config')]",
+				"[concat(variables('factoryId'), '/datasets/DS_CSV_File')]",
+				"[concat(variables('factoryId'), '/datasets/DS_AzSQL_Staging')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SPExecution Process')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "SPExecution",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderStoredProcedureName": "[[dbo].[getIngestionProcess]",
+								"storedProcedureParameters": {
+									"jobid": {
+										"type": "Int32",
+										"value": {
+											"value": "@pipeline().parameters.jobid",
+											"type": "Expression"
+										}
+									},
+									"processStepId": {
+										"type": "Int32",
+										"value": {
+											"value": "@pipeline().parameters.ProcessStepId",
+											"type": "Expression"
+										}
+									}
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "DS_AzSQL_Config",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "SPExecution",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('SPExecution').output.value",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Copy data1",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "DelimitedTextSource",
+											"storeSettings": {
+												"type": "AzureBlobStorageReadSettings",
+												"recursive": true,
+												"enablePartitionDiscovery": false
+											},
+											"formatSettings": {
+												"type": "DelimitedTextReadSettings"
+											}
+										},
+										"sink": {
+											"type": "AzureSqlSink"
+										},
+										"enableStaging": false
+									},
+									"inputs": [
+										{
+											"referenceName": "DS_CSV_File",
+											"type": "DatasetReference",
+											"parameters": {
+												"filename": {
+													"value": "@item().srcdataFileName",
+													"type": "Expression"
+												},
+												"storageAccountName": {
+													"value": "@item().srcStorageContainerName",
+													"type": "Expression"
+												},
+												"storageAccountSecret": {
+													"value": "@item().srcStorageContainerKVSecret",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "DS_AzSQL_Staging",
+											"type": "DatasetReference",
+											"parameters": {
+												"ServerName": {
+													"value": "@item().tgtserverName",
+													"type": "Expression"
+												},
+												"DatabaseName": {
+													"value": "@item().tgtdatabaseName",
+													"type": "Expression"
+												},
+												"UserName": {
+													"value": "@item().tgtdbUserName",
+													"type": "Expression"
+												},
+												"PasswordSecret": {
+													"value": "@item().tgtdbUserKVPasswordSecret",
+													"type": "Expression"
+												},
+												"TableSchema": "Staging",
+												"TableName": {
+													"value": "@item().tgtTableName",
+													"type": "Expression"
+												}
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"jobid": {
+						"type": "int"
+					},
+					"ProcessStepId": {
+						"type": "int"
+					},
+					"MasterPipelineId": {
+						"type": "string"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_AzSQL_Config')]",
+				"[concat(variables('factoryId'), '/datasets/DS_CSV_File')]",
+				"[concat(variables('factoryId'), '/datasets/DS_AzSQL_Staging')]"
+			]
 		}
 	]
 }
