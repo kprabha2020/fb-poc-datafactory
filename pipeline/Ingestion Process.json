@@ -80,7 +80,7 @@
 									"type": "DelimitedTextSource",
 									"additionalColumns": [
 										{
-											"name": "restoId",
+											"name": "RESTOID",
 											"value": {
 												"value": "@pipeline().parameters.restoId",
 												"type": "Expression"
