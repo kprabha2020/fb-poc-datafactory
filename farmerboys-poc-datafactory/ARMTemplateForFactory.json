@@ -320,7 +320,7 @@
 								"type": "Expression"
 							},
 							"isSequential": false,
-							"batchCount": 10,
+							"batchCount": 20,
 							"activities": [
 								{
 									"name": "If Condition1",
