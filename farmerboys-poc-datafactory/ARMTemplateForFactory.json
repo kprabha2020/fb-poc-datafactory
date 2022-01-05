@@ -319,7 +319,8 @@
 								"value": "@activity('Ingestion').output.value",
 								"type": "Expression"
 							},
-							"isSequential": true,
+							"isSequential": false,
+							"batchCount": 10,
 							"activities": [
 								{
 									"name": "If Condition1",
@@ -571,7 +572,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
-								"sqlReaderQuery": "SELECT jobId, runPriority,restoId FROM \nmetadata.ProcessSteps\nWHERE isActive=1\nGROUP BY jobId,runPriority,restoId\nORDER BY runPriority",
+								"sqlReaderStoredProcedureName": "[[dbo].[getGetProcessSteps]",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
