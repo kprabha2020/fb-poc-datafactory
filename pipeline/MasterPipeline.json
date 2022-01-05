@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT jobId, runPriority,restoId FROM \nmetadata.ProcessSteps\nWHERE isActive=1\nGROUP BY jobId,runPriority,restoId\nORDER BY runPriority",
+						"sqlReaderStoredProcedureName": "[dbo].[getGetProcessSteps]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
