@@ -57,7 +57,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@activity('SPExecution').output.withRestoIdParameter",
+									"value": "@item().withRestoIdParameter",
 									"type": "Expression"
 								},
 								"ifFalseActivities": [
