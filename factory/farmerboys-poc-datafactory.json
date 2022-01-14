@@ -1,9 +1,9 @@
 {
 	"name": "farmerboys-poc-datafactory",
-	"location": "eastus",
+	"location": "westus3",
 	"identity": {
 		"type": "SystemAssigned",
-		"principalId": "889a59ce-ec5b-452d-b9dc-da3b5dfb5c65",
+		"principalId": "64e3ce3f-f0c4-4b8b-b358-7553dae52fb8",
 		"tenantId": "ef24a074-12e7-4dc6-9fef-3e86fcaceadb"
 	}
 }
