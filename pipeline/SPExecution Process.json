@@ -77,15 +77,6 @@
 											"storedProcedureName": {
 												"value": "@item().storedProcName",
 												"type": "Expression"
-											},
-											"storedProcedureParameters": {
-												"RestoId": {
-													"value": {
-														"value": "@pipeline().parameters.restoId",
-														"type": "Expression"
-													},
-													"type": "Int64"
-												}
 											}
 										},
 										"linkedServiceName": {
