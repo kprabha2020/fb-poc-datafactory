@@ -51,53 +51,119 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Stored procedure1",
-							"type": "SqlServerStoredProcedure",
+							"name": "If Condition1",
+							"type": "IfCondition",
 							"dependsOn": [],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
 							"userProperties": [],
 							"typeProperties": {
-								"storedProcedureName": {
-									"value": "@item().storedProcName",
+								"expression": {
+									"value": "@activity('SPExecution').output.withRestoIdParameter",
 									"type": "Expression"
 								},
-								"storedProcedureParameters": {
-									"RestoId": {
-										"value": {
-											"value": "@pipeline().parameters.restoId",
-											"type": "Expression"
+								"ifFalseActivities": [
+									{
+										"name": "Stored procedure1_WithoutRestoId",
+										"type": "SqlServerStoredProcedure",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
 										},
-										"type": "Int64"
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": {
+												"value": "@item().storedProcName",
+												"type": "Expression"
+											},
+											"storedProcedureParameters": {
+												"RestoId": {
+													"value": {
+														"value": "@pipeline().parameters.restoId",
+														"type": "Expression"
+													},
+													"type": "Int64"
+												}
+											}
+										},
+										"linkedServiceName": {
+											"referenceName": "LS_AZ_SQL",
+											"type": "LinkedServiceReference",
+											"parameters": {
+												"ServerName": {
+													"value": "@item().tgtserverName",
+													"type": "Expression"
+												},
+												"DatabaseName": {
+													"value": "@item().tgtdatabaseName",
+													"type": "Expression"
+												},
+												"UserName": {
+													"value": "@item().tgtdbUserName",
+													"type": "Expression"
+												},
+												"PasswordSecret": {
+													"value": "@item().tgtdbUserKVPasswordSecret",
+													"type": "Expression"
+												}
+											}
+										}
 									}
-								}
-							},
-							"linkedServiceName": {
-								"referenceName": "LS_AZ_SQL",
-								"type": "LinkedServiceReference",
-								"parameters": {
-									"ServerName": {
-										"value": "@item().tgtserverName",
-										"type": "Expression"
-									},
-									"DatabaseName": {
-										"value": "@item().tgtdatabaseName",
-										"type": "Expression"
-									},
-									"UserName": {
-										"value": "@item().tgtdbUserName",
-										"type": "Expression"
-									},
-									"PasswordSecret": {
-										"value": "@item().tgtdbUserKVPasswordSecret",
-										"type": "Expression"
+								],
+								"ifTrueActivities": [
+									{
+										"name": "Stored procedure1_WithRestoId",
+										"type": "SqlServerStoredProcedure",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": {
+												"value": "@item().storedProcName",
+												"type": "Expression"
+											},
+											"storedProcedureParameters": {
+												"RestoId": {
+													"value": {
+														"value": "@pipeline().parameters.restoId",
+														"type": "Expression"
+													},
+													"type": "Int64"
+												}
+											}
+										},
+										"linkedServiceName": {
+											"referenceName": "LS_AZ_SQL",
+											"type": "LinkedServiceReference",
+											"parameters": {
+												"ServerName": {
+													"value": "@item().tgtserverName",
+													"type": "Expression"
+												},
+												"DatabaseName": {
+													"value": "@item().tgtdatabaseName",
+													"type": "Expression"
+												},
+												"UserName": {
+													"value": "@item().tgtdbUserName",
+													"type": "Expression"
+												},
+												"PasswordSecret": {
+													"value": "@item().tgtdbUserKVPasswordSecret",
+													"type": "Expression"
+												}
+											}
+										}
 									}
-								}
+								]
 							}
 						}
 					]
