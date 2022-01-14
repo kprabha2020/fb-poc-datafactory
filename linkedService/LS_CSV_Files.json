@@ -6,7 +6,7 @@
 		"type": "AzureBlobStorage",
 		"typeProperties": {
 			"connectionString": "DefaultEndpointsProtocol=https;AccountName=farmerboysstorageaccount;EndpointSuffix=core.windows.net;",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQEFFODhBOTIzLTZBMzAtNEQ0OC1CMkJDLUZBNkM4RjgwNDVFRF8zMGVjOWI5ZS1jMWFkLTQyZmQtOGRlYi0zODAwZmU3YTYxZGEiDQp9"
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQEQ4NEEwM0YxLTc2QTQtNEMzNi1CMjZCLTRFRURGRjIxMTFGRV8wMmIwYWMzZS1jNmZhLTRiZmItOTM1Ni00MTU0ZmJlYjgxNWYiDQp9"
 		}
 	}
 }
