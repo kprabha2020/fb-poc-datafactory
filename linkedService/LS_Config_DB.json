@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "AzureSqlDatabase",
 		"typeProperties": {
-			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=fbclouddbserver.database.windows.net;Initial Catalog=platform-config;User ID=aadmin",
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=farmerboysdbserver.database.windows.net;Initial Catalog=fbcloud;User ID=aadmin",
 			"password": {
 				"type": "AzureKeyVaultSecret",
 				"store": {
