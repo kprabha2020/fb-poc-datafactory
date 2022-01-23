@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "AzureKeyVault",
 		"typeProperties": {
-			"baseUrl": "https://farmerboys-azkeyvault.vault.azure.net/"
+			"baseUrl": "https://fbazkeyvault.vault.azure.net/"
 		}
 	}
 }
