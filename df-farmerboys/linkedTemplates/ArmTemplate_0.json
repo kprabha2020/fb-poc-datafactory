@@ -252,6 +252,9 @@
 					},
 					"storageAccountSecret": {
 						"type": "string"
+					},
+					"DataFilePath": {
+						"type": "string"
 					}
 				},
 				"annotations": [],
@@ -261,6 +264,10 @@
 						"type": "AzureBlobStorageLocation",
 						"fileName": {
 							"value": "@dataset().filename",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().DataFilePath",
 							"type": "Expression"
 						},
 						"container": "sourcedata"
@@ -415,6 +422,10 @@
 															"storageAccountSecret": {
 																"value": "@item().srcStorageContainerKVSecret",
 																"type": "Expression"
+															},
+															"DataFilePath": {
+																"value": "@item().DataFilePath",
+																"type": "Expression"
 															}
 														}
 													}
@@ -503,6 +514,10 @@
 															},
 															"storageAccountSecret": {
 																"value": "@item().srcStorageContainerKVSecret",
+																"type": "Expression"
+															},
+															"DataFilePath": {
+																"value": "@item().DataFilePath",
 																"type": "Expression"
 															}
 														}
