@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "df-farmerboys"
+		},
+		"LS_AZ_SQL_connectionString": {
+			"value": ""
+		},
+		"LS_BlobStorageAccount_Generic_connectionString": {
+			"value": ""
+		},
+		"LS_Config_DB_connectionString": {
+			"value": ""
+		},
+		"AZ_KeyVault_properties_typeProperties_baseUrl": {
+			"value": "https://fbazkeyvault.vault.azure.net/"
+		}
+	}
+}
