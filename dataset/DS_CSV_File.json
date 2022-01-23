@@ -24,6 +24,9 @@
 			},
 			"storageAccountSecret": {
 				"type": "string"
+			},
+			"DataFilePath": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -33,6 +36,10 @@
 				"type": "AzureBlobStorageLocation",
 				"fileName": {
 					"value": "@dataset().filename",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().DataFilePath",
 					"type": "Expression"
 				},
 				"container": "sourcedata"

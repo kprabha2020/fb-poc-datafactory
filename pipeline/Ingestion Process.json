@@ -134,6 +134,10 @@
 													"storageAccountSecret": {
 														"value": "@item().srcStorageContainerKVSecret",
 														"type": "Expression"
+													},
+													"DataFilePath": {
+														"value": "@item().DataFilePath",
+														"type": "Expression"
 													}
 												}
 											}
@@ -222,6 +226,10 @@
 													},
 													"storageAccountSecret": {
 														"value": "@item().srcStorageContainerKVSecret",
+														"type": "Expression"
+													},
+													"DataFilePath": {
+														"value": "@item().DataFilePath",
 														"type": "Expression"
 													}
 												}
