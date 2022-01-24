@@ -1,5 +1,6 @@
 {
 	"name": "LS_AZ_SQL",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"parameters": {
 			"ServerName": {
@@ -31,6 +32,5 @@
 				}
 			}
 		}
-	},
-	"type": "Microsoft.DataFactory/factories/linkedservices"
+	}
 }

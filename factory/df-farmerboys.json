@@ -1,0 +1,9 @@
+{
+	"name": "df-farmerboys",
+	"location": "westus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "73010040-4f17-45e0-b33a-34322db2cd46",
+		"tenantId": "ad0b7821-86ee-46c4-841a-be99da55a98e"
+	}
+}

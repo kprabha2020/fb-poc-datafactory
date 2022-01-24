@@ -203,6 +203,8 @@
 				"type": "int"
 			}
 		},
-		"annotations": []
-	}
+		"annotations": [],
+		"lastPublishTime": "2022-01-23T10:42:31Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
 }
