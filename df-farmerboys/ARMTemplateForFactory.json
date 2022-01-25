@@ -240,7 +240,8 @@
 						"type": "int"
 					}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2022-01-23T10:42:31Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DS_AzSQL_Config')]",
@@ -547,7 +548,8 @@
 						"type": "string"
 					}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2022-01-23T15:09:52Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DS_AzSQL_Config')]",
@@ -646,7 +648,8 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2022-01-23T10:42:32Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DS_AzSQL_Config')]",
@@ -818,7 +821,8 @@
 						"type": "string"
 					}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2022-01-23T10:42:29Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DS_AzSQL_Config')]",
@@ -1009,7 +1013,8 @@
 						"type": "string"
 					}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2022-01-23T10:42:28Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DS_AzSQL_Config')]",
@@ -1301,6 +1306,44 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/MasterPipeline')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Send Email')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Send Mail",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-06.westus3.logic.azure.com:443/workflows/a11ab0989ea3481398908dd4b1d48d55/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=AlqQ-KhK-iiTh-qNqipik5dpbm3QQfHDFhn3pD2maNs",
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/json"
+							},
+							"body": {
+								"StoreProcName": "TestStoredProc"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
 		}
 	]
 }
