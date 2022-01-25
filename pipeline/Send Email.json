@@ -21,7 +21,7 @@
 						"Content-Type": "application/json"
 					},
 					"body": {
-						"StoreProcName": "TestStoredProc"
+						"StoreProcName": "uspMailJobCompletion"
 					}
 				}
 			}
