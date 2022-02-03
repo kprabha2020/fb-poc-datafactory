@@ -58,13 +58,7 @@
 									"referenceName": "MasterPipeline",
 									"type": "PipelineReference"
 								},
-								"waitOnCompletion": true,
-								"parameters": {
-									"jobid": {
-										"value": "@item().jobid",
-										"type": "Expression"
-									}
-								}
+								"waitOnCompletion": false
 							}
 						}
 					]
