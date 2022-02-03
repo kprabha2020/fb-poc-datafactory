@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup1",
+				"name": "Lookup_jobs",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderStoredProcedureName": "[dbo].[getGetProcessSteps]",
+						"sqlReaderQuery": "select * from [metadata].[Job] WHERE Isactive=1",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -29,11 +29,11 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "ForEach1_copy1",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Lookup1",
+						"activity": "Lookup_jobs",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -42,40 +42,92 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup1').output.value",
+						"value": "@activity('Lookup_jobs').output.value",
 						"type": "Expression"
 					},
-					"isSequential": true,
+					"isSequential": false,
+					"batchCount": 10,
 					"activities": [
 						{
-							"name": "Execute Process Steps",
-							"type": "ExecutePipeline",
+							"name": "Lookup1",
+							"type": "Lookup",
 							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
 							"userProperties": [],
 							"typeProperties": {
-								"pipeline": {
-									"referenceName": "Execute Process Steps",
-									"type": "PipelineReference"
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "select * from [metadata].[ProcessSteps] where jobid=@{activity('Lookup_jobs').output.jobid}",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
 								},
-								"waitOnCompletion": true,
-								"parameters": {
-									"jobid": {
-										"value": "@item().jobid",
-										"type": "Expression"
-									},
-									"runpriority": {
-										"value": "@item().runpriority",
-										"type": "Expression"
-									},
-									"MasterPipelineRunId": {
-										"value": "@pipeline().RunId",
-										"type": "Expression"
-									},
-									"restoId": {
-										"value": "@item().restoId",
-										"type": "Expression"
-									}
+								"dataset": {
+									"referenceName": "DS_AzSQL_Config",
+									"type": "DatasetReference"
+								},
+								"firstRowOnly": false
+							}
+						},
+						{
+							"name": "ForEach1",
+							"type": "ForEach",
+							"dependsOn": [
+								{
+									"activity": "Lookup1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
 								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"items": {
+									"value": "@activity('Lookup1').output.value",
+									"type": "Expression"
+								},
+								"isSequential": true,
+								"activities": [
+									{
+										"name": "Execute Process Steps",
+										"type": "ExecutePipeline",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"pipeline": {
+												"referenceName": "Execute Process Steps",
+												"type": "PipelineReference"
+											},
+											"waitOnCompletion": true,
+											"parameters": {
+												"jobid": {
+													"value": "@item().jobid",
+													"type": "Expression"
+												},
+												"runpriority": {
+													"value": "@item().runpriority",
+													"type": "Expression"
+												},
+												"MasterPipelineRunId": {
+													"value": "@pipeline().RunId",
+													"type": "Expression"
+												},
+												"restoId": {
+													"value": "@item().restoId",
+													"type": "Expression"
+												}
+											}
+										}
+									}
+								]
 							}
 						}
 					]
@@ -86,7 +138,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "ForEach1",
+						"activity": "ForEach1_copy1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
