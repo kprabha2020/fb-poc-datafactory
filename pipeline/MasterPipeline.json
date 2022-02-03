@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup_jobs",
+				"name": "Lookup1",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -17,7 +17,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select * from [metadata].[Job] WHERE Isactive=1",
+						"sqlReaderQuery": {
+							"value": "select * from [metadata].[ProcessSteps] where jobid=@{activity('Lookup_jobs').output.jobid}",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -29,11 +32,11 @@
 				}
 			},
 			{
-				"name": "ForEach1_copy1",
+				"name": "ForEach1",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Lookup_jobs",
+						"activity": "Lookup1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -42,118 +45,51 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup_jobs').output.value",
+						"value": "@activity('Lookup1').output.value",
 						"type": "Expression"
 					},
-					"isSequential": false,
-					"batchCount": 10,
+					"isSequential": true,
 					"activities": [
 						{
-							"name": "Lookup1",
-							"type": "Lookup",
+							"name": "Execute Process Steps",
+							"type": "ExecutePipeline",
 							"dependsOn": [],
-							"policy": {
-								"timeout": "7.00:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
 							"userProperties": [],
 							"typeProperties": {
-								"source": {
-									"type": "AzureSqlSource",
-									"sqlReaderQuery": {
-										"value": "select * from [metadata].[ProcessSteps] where jobid=@{activity('Lookup_jobs').output.jobid}",
+								"pipeline": {
+									"referenceName": "Execute Process Steps",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"jobid": {
+										"value": "@item().jobid",
 										"type": "Expression"
 									},
-									"queryTimeout": "02:00:00",
-									"partitionOption": "None"
-								},
-								"dataset": {
-									"referenceName": "DS_AzSQL_Config",
-									"type": "DatasetReference"
-								},
-								"firstRowOnly": false
-							}
-						},
-						{
-							"name": "ForEach1",
-							"type": "ForEach",
-							"dependsOn": [
-								{
-									"activity": "Lookup1",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"items": {
-									"value": "@activity('Lookup1').output.value",
-									"type": "Expression"
-								},
-								"isSequential": true,
-								"activities": [
-									{
-										"name": "Execute Process Steps",
-										"type": "ExecutePipeline",
-										"dependsOn": [],
-										"userProperties": [],
-										"typeProperties": {
-											"pipeline": {
-												"referenceName": "Execute Process Steps",
-												"type": "PipelineReference"
-											},
-											"waitOnCompletion": true,
-											"parameters": {
-												"jobid": {
-													"value": "@item().jobid",
-													"type": "Expression"
-												},
-												"runpriority": {
-													"value": "@item().runpriority",
-													"type": "Expression"
-												},
-												"MasterPipelineRunId": {
-													"value": "@pipeline().RunId",
-													"type": "Expression"
-												},
-												"restoId": {
-													"value": "@item().restoId",
-													"type": "Expression"
-												}
-											}
-										}
+									"runpriority": {
+										"value": "@item().runpriority",
+										"type": "Expression"
+									},
+									"MasterPipelineRunId": {
+										"value": "@pipeline().RunId",
+										"type": "Expression"
+									},
+									"restoId": {
+										"value": "@item().restoId",
+										"type": "Expression"
 									}
-								]
+								}
 							}
 						}
 					]
 				}
-			},
-			{
-				"name": "SendMail",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "ForEach1_copy1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "Send Email",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true
-				}
 			}
 		],
+		"parameters": {
+			"jobid": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"lastPublishTime": "2022-01-23T10:42:32Z"
 	},
