@@ -61,8 +61,7 @@
 						"value": "@activity('GetProcessType').output.value",
 						"type": "Expression"
 					},
-					"isSequential": false,
-					"batchCount": 20,
+					"isSequential": true,
 					"activities": [
 						{
 							"name": "Switch1",
