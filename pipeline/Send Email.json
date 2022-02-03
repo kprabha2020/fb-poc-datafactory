@@ -44,7 +44,7 @@
 						"Content-Type": "application/json"
 					},
 					"body": {
-						"StoreProcName": "[dbo].[uspCompareValidation]"
+						"StoreProcName": "[dbo].[uspMailJobCompletionCompareValidation]"
 					}
 				}
 			}
