@@ -17,10 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": {
-							"value": "select * from [metadata].[ProcessSteps] where jobid=@{pipeline().parameters.jobid}",
-							"type": "Expression"
-						},
+						"sqlReaderStoredProcedureName": "[dbo].[getGetProcessSteps]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -85,11 +82,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"jobid": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"lastPublishTime": "2022-01-23T10:42:32Z"
 	},

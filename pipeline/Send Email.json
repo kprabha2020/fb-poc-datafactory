@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Send Mail ETL Validation",
+				"name": "Send Mail",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
@@ -21,34 +21,13 @@
 						"Content-Type": "application/json"
 					},
 					"body": {
-						"StoreProcName": "uspMailJobCompletion"
-					}
-				}
-			},
-			{
-				"name": "Send Mail Compare Validation",
-				"type": "WebActivity",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"url": "https://prod-06.westus3.logic.azure.com:443/workflows/a11ab0989ea3481398908dd4b1d48d55/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=AlqQ-KhK-iiTh-qNqipik5dpbm3QQfHDFhn3pD2maNs",
-					"method": "POST",
-					"headers": {
-						"Content-Type": "application/json"
-					},
-					"body": {
-						"StoreProcName": "uspMailJobCompletionCompareValidation"
+						"StoreProcName": "TestStoredProc"
 					}
 				}
 			}
 		],
-		"annotations": []
-	}
+		"annotations": [],
+		"lastPublishTime": "2022-01-25T10:13:07Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
 }
