@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Send Mail",
+				"name": "Store Validation",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
@@ -26,7 +26,7 @@
 				}
 			},
 			{
-				"name": "Send Mail_copy1",
+				"name": "Compare Validation",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
