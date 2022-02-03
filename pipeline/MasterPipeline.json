@@ -45,7 +45,8 @@
 						"value": "@activity('Lookup1').output.value",
 						"type": "Expression"
 					},
-					"isSequential": true,
+					"isSequential": false,
+					"batchCount": 30,
 					"activities": [
 						{
 							"name": "Execute Process Steps",
