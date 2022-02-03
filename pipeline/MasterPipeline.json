@@ -57,7 +57,7 @@
 									"referenceName": "Execute Process Steps",
 									"type": "PipelineReference"
 								},
-								"waitOnCompletion": true,
+								"waitOnCompletion": false,
 								"parameters": {
 									"jobid": {
 										"value": "@item().jobid",
