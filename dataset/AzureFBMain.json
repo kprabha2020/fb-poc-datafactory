@@ -2,15 +2,29 @@
 	"name": "AzureFBMain",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "LS_Config_DB",
-			"type": "LinkedServiceReference"
+			"referenceName": "LS_AZ_SQL",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"ServerName": "farmerboysdbserver.database.windows.net",
+				"DatabaseName": "FBMain",
+				"UserName": "aadmin",
+				"PasswordSecret": "SQLServerpasswordsecret"
+			}
+		},
+		"parameters": {
+			"TableName": {
+				"type": "string"
+			}
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "DimEmployee"
+			"table": {
+				"value": "@dataset().TableName",
+				"type": "Expression"
+			}
 		}
 	}
 }
