@@ -5,13 +5,21 @@
 			"referenceName": "ADLS Gen2 Model Data",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"FileName": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "model/DimEmployee",
-				"fileSystem": "history"
+				"folderPath": {
+					"value": "@dataset().FileName",
+					"type": "Expression"
+				},
+				"fileSystem": "history/model"
 			},
 			"compressionCodec": "snappy"
 		},
