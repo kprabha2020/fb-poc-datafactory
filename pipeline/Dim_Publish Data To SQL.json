@@ -26,7 +26,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "--TRUNCATE TABLE DimEmployee",
+						"preCopyScript": "TRUNCATE TABLE DimEmployee",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate",
@@ -85,7 +85,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "--TRUNCATE TABLE DimMode",
+						"preCopyScript": "TRUNCATE TABLE DimMode",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate",
@@ -144,7 +144,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "--TRUNCATE TABLE DimMenu",
+						"preCopyScript": "TRUNCATE TABLE DimMenu",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate",
@@ -203,7 +203,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "--TRUNCATE TABLE RelnStoreInvoices",
+						"preCopyScript": "TRUNCATE TABLE RelnStoreInvoices",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate",
@@ -262,7 +262,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "--TRUNCATE TABLE DimCategory",
+						"preCopyScript": "TRUNCATE TABLE DimCategory",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate",
@@ -321,7 +321,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "--TRUNCATE TABLE DimDivision",
+						"preCopyScript": "TRUNCATE TABLE DimDivision",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate",
@@ -380,7 +380,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "--TRUNCATE TABLE DimItem",
+						"preCopyScript": "TRUNCATE TABLE DimItem",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate",
@@ -439,7 +439,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "--TRUNCATE TABLE DimMedia",
+						"preCopyScript": "TRUNCATE TABLE DimMedia",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate",
@@ -498,7 +498,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "--TRUNCATE TABLE DimDiscount",
+						"preCopyScript": "TRUNCATE TABLE DimDiscount",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate",
@@ -557,7 +557,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "--TRUNCATE TABLE DimTax",
+						"preCopyScript": "TRUNCATE TABLE DimTax",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate",
