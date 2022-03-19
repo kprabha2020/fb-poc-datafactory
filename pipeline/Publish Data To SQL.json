@@ -45,7 +45,10 @@
 				"inputs": [
 					{
 						"referenceName": "parquetData",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName": "DimEmployee"
+						}
 					}
 				],
 				"outputs": [
@@ -101,7 +104,10 @@
 				"inputs": [
 					{
 						"referenceName": "parquetData",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName": "DimMode"
+						}
 					}
 				],
 				"outputs": [
@@ -157,7 +163,10 @@
 				"inputs": [
 					{
 						"referenceName": "parquetData",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName": "DimMenu"
+						}
 					}
 				],
 				"outputs": [
@@ -213,7 +222,10 @@
 				"inputs": [
 					{
 						"referenceName": "parquetData",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName": "RelnStoreInvoices"
+						}
 					}
 				],
 				"outputs": [
@@ -269,7 +281,10 @@
 				"inputs": [
 					{
 						"referenceName": "parquetData",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName": "DimCategory"
+						}
 					}
 				],
 				"outputs": [
@@ -325,7 +340,10 @@
 				"inputs": [
 					{
 						"referenceName": "parquetData",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"FileName": "DimDivision"
+						}
 					}
 				],
 				"outputs": [
