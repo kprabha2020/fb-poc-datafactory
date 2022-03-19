@@ -20,7 +20,7 @@
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "dbo",
+			"schema": "mart",
 			"table": {
 				"value": "@dataset().TableName",
 				"type": "Expression"
