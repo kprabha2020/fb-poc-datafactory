@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy DimCalender",
+				"name": "Copy DimTimeSegment",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
