@@ -2,7 +2,7 @@
 	"name": "AzureFBMain",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "LS_AZ_SQL",
+			"referenceName": "LS_Config_DB",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
