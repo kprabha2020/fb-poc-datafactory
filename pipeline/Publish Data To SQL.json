@@ -50,7 +50,10 @@
 				"outputs": [
 					{
 						"referenceName": "AzureFBMain",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"TableName": "DimEmployee"
+						}
 					}
 				]
 			}
