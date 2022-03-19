@@ -1,0 +1,41 @@
+{
+	"name": "parquetData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS Gen2 Model Data",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "model/DimEmployee",
+				"fileSystem": "history"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "EmployeeKey",
+				"type": "INT32"
+			},
+			{
+				"name": "StoreId",
+				"type": "INT64"
+			},
+			{
+				"name": "EmployeeId",
+				"type": "INT64"
+			},
+			{
+				"name": "EmployeeName",
+				"type": "UTF8"
+			},
+			{
+				"name": "LoadDateTime",
+				"type": "INT96"
+			}
+		]
+	}
+}
